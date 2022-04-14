@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     empPayrollList = getEmployeePayrollDataFromStorage();
     document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
-    //  localStorage.removeItem('editEmp');
+    localStorage.removeItem('editEmp');
 });
 
 const getEmployeePayrollDataFromStorage = () => {
@@ -37,54 +37,54 @@ const createInnerHtml = () => {
 //UC5 Display Employee Details from JSON Object
 const createEmployeePayrollJSON = () => {
     let empPayrollListLocal = [{
-            "id": 1,
-            "_name": "Mark",
-            "_gender": "male",
-            "_department": [
-                "Finance"
-            ],
-            "_salary": "500000",
-            "_startDate": "29 Oct 2019",
-            "_note": "All In One",
-            "_profilePic": "../assets/profile-images/Ellipse -3.png"
-        },
-        {
-            "id": 2,
-            "_name": "Bill",
-            "_gender": "male",
-            "_department": [
-                "Engineering"
-            ],
-            "_salary": "500000",
-            "_startDate": "29 Oct 2019",
-            "_note": "Terrific Engineer",
-            "_profilePic": "../assets/profile-images/Ellipse -1.png"
-        },
-        {
-            "_name": "Keerthi",
-            "_gender": "female",
-            "_department": [
-                "Sales"
-            ],
-            "_salary": "400000",
-            "_startDate": "29 Oct 2019",
-            "_note": "",
-            "_profilePic": "../assets/profile-images/Ellipse -4.png",
-            "id": 3
-        },
-        {
-            "_name": "Kavya",
-            "_profilePic": "../assets/profile-images/Ellipse -7.png",
-            "_gender": "female",
-            "_department": [
-                "Finance",
-                "Engineer"
-            ],
-            "_salary": "428100",
-            "_note": "                ",
-            "_startDate": "12 Sep 2021",
-            "id": 5
-        }
+        "id": 1,
+        "_name": "Mark",
+        "_gender": "male",
+        "_department": [
+            "Finance"
+        ],
+        "_salary": "500000",
+        "_startDate": "29 Oct 2019",
+        "_note": "All In One",
+        "_profilePic": "../assets/profile-images/Ellipse -3.png"
+    },
+    {
+        "id": 2,
+        "_name": "Bill",
+        "_gender": "male",
+        "_department": [
+            "Engineering"
+        ],
+        "_salary": "500000",
+        "_startDate": "29 Oct 2019",
+        "_note": "Terrific Engineer",
+        "_profilePic": "../assets/profile-images/Ellipse -1.png"
+    },
+    {
+        "_name": "Keerthi",
+        "_gender": "female",
+        "_department": [
+            "Sales"
+        ],
+        "_salary": "400000",
+        "_startDate": "29 Oct 2019",
+        "_note": "",
+        "_profilePic": "../assets/profile-images/Ellipse -4.png",
+        "id": 3
+    },
+    {
+        "_name": "Kavya",
+        "_profilePic": "../assets/profile-images/Ellipse -7.png",
+        "_gender": "female",
+        "_department": [
+            "Finance",
+            "Engineer"
+        ],
+        "_salary": "428100",
+        "_note": "                ",
+        "_startDate": "12 Sep 2021",
+        "id": 5
+    }
     ];
     return empPayrollListLocal;
 }
@@ -96,14 +96,24 @@ const getDeptHtml = (deptList) => {
     }
     return deptHtml;
 }
-
-const remove=(data)=>{
-    let employeeData=empPayrollList.find(empData=>empData._id==data.id);
-    if(!employeeData)
-    return;
-    const index=empPayrollList.map(empData=>empData._id).indexOf(employeeData._id);
-    empPayrollList.splice(index,1);
-    localStorage.setItem('EmployeePayrollList',JSON.stringify(empPayrollList));
-    document.querySelector('.emp-count').textContent=empPayrollList.length;
+/** Ability to remove employee deatils  */
+const remove = (data) => {
+    let employeeData = empPayrollList.find(empData => empData._id == data.id);
+    if (!employeeData)
+        return;
+    const index = empPayrollList.map(empData => empData._id).indexOf(employeeData._id);
+    empPayrollList.splice(index, 1);
+    localStorage.setItem('EmployeePayrollList', JSON.stringify(empPayrollList));
+    document.querySelector('.emp-count').textContent = empPayrollList.length;
     createInnerHtml();
+    console.log("data deleted succsfully...")
+}
+/** Update employee payroll details */
+const update = (data) => {
+
+    let empPayrollData = empPayrollList.find(empData => empData._id == data.id);
+    if (!empPayrollData)
+        return;
+    localStorage.setItem('edit-emp', JSON.stringify(empPayrollData));
+    window.location.replace(siteProperties.addEmployee);
 }
